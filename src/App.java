@@ -1,5 +1,10 @@
+import javax.swing.JFrame;
+
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+       JFrame frame = new JFrame("App Java Swing");
+       frame.setSize(500, 500);
+       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       frame.setVisible(true);
     }
 }
