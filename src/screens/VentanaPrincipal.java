@@ -50,6 +50,7 @@ public class VentanaPrincipal extends JFrame{
         jMenuItemInsertarCarreras = new JMenuItem();
         jMenuItemInsertarCarreras.setText("Insertar...");
 
+        //Agregar el listener de eventos para ejecutar la acción de insertar carrera
         jMenuItemInsertarCarreras.addActionListener(e -> jmiInsertarCarreras());
        
 
@@ -68,8 +69,13 @@ public class VentanaPrincipal extends JFrame{
     }
 
     private void jmiInsertarCarreras(){
+        //1. Crear un objeto tipo JInternalFrame
         JInternalFrameInsertarCarrera insertarCarrera = new JInternalFrameInsertarCarrera();
+        
+        //2. Agregar el internal frame al escritorio(desktop)
         this.desktop.add(insertarCarrera);
+        
+        //3. Hacer visible el internal frame
         insertarCarrera.setVisible(true);
     }
 

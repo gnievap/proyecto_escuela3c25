@@ -12,7 +12,7 @@ public class App {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error en el Look and Feel: " + e.getMessage());
         }
         VentanaPrincipal ventanaPrincipal = new VentanaPrincipal("Proyecto Escuela");
         ventanaPrincipal.setSize(500,500);
