@@ -1,7 +1,5 @@
 package screens;
 
-import java.awt.event.ActionListener;
-
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -28,9 +26,10 @@ public class VentanaPrincipal extends JFrame{
         // DesktopPane - escritorio
         desktop = new JDesktopPane();
         this.add(desktop);
+        this.setContentPane(desktop); 
         // Barra de Menu
         jMenuBar = new JMenuBar();
-        this.add(jMenuBar);
+        // this.add(jMenuBar);
         // Menu Alumnos
         jMenuAlumnos = new JMenu();
         jMenuAlumnos.setText("Alumnos");
@@ -50,11 +49,9 @@ public class VentanaPrincipal extends JFrame{
         // Elemento de menu: Insertar carrera
         jMenuItemInsertarCarreras = new JMenuItem();
         jMenuItemInsertarCarreras.setText("Insertar...");
-        jMenuItemInsertarCarreras.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent event){
-                jmiInsertarCarreras(event);
-            }
-        });
+
+        jMenuItemInsertarCarreras.addActionListener(e -> jmiInsertarCarreras());
+       
 
 
         // Agregar menuItem a menu 
@@ -69,5 +66,12 @@ public class VentanaPrincipal extends JFrame{
         this.setJMenuBar(jMenuBar);
         pack();
     }
+
+    private void jmiInsertarCarreras(){
+        JInternalFrameInsertarCarrera insertarCarrera = new JInternalFrameInsertarCarrera();
+        this.desktop.add(insertarCarrera);
+        insertarCarrera.setVisible(true);
+    }
+
     
 }
