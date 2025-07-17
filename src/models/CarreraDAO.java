@@ -27,7 +27,7 @@ public class CarreraDAO {
             stmt.setDouble(3, carrera.getMonto());
             rows = stmt.executeUpdate();
         } catch (SQLException e){
-            e.printStackTrace();
+            System.out.println("Error al insertar carrera: " + e.getMessage());
         }
 
         return rows; 
