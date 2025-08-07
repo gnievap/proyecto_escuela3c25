@@ -35,6 +35,23 @@ public class CarreraDAO {
         return ultimoId;
     }
 
+    public boolean existeCarrera(String nombre) {
+        String sql = "SELECT COUNT(*) FROM carreras WHERE nombre = ?";
+        boolean existe = false;
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nombre);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                existe = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al verificar si la carrera existe: " + e.getMessage());
+        }
+
+        return existe;
+    }
+
     public int insertarCarrera(Carrera carrera) {
 
         String sql = "INSERT INTO carreras (idcarrera, nombre, monto) VALUES (?, ?, ?)";

@@ -23,6 +23,7 @@ public class JInternalFrameInsertarCarrera extends JInternalFrame{
     private JButton btnAceptar;
     private JButton btnCancelar;
     private Connection conn; // Conexión a la base de datos
+    private CarreraDAO carreraDAO;
 
     public JInternalFrameInsertarCarrera(Connection conn){
         super("Insertar carrera", 
@@ -30,14 +31,15 @@ public class JInternalFrameInsertarCarrera extends JInternalFrame{
               true,  // closable
               true,  // maximizable
               true); // iconifiable (minimizable)
-        this.conn = conn; // Inicializar la conexión a la base de datos   
+        this.conn = conn; // Inicializar la conexión a la base de datos 
+        this.carreraDAO = new CarreraDAO(conn);  
         this.setTitle("Insertar nueva carrera");
         this.setSize(400,400);
         initComponents();
     }
 
     private void initComponents(){
-        CarreraDAO carreraDAO = new CarreraDAO(conn);
+        
         // Obtener el último ID y sumarle 1 para el nuevo registro
         int lastId = carreraDAO.obtenerUltimoId() + 1; 
         // Creación de objetos
@@ -114,6 +116,13 @@ public class JInternalFrameInsertarCarrera extends JInternalFrame{
                 return;
         }
         else {
+            // Revisar que la carrera no exista
+            if (carreraDAO.existeCarrera(nombre)) {
+                JOptionPane.showMessageDialog(this, "La carrera ya existe.");
+                return;
+            }
+
+            // Si la carrera no existe, proceder a insertarla
             Carrera carrera = new Carrera(id, nombre, monto);
             CarreraDAO carreraDAO = new CarreraDAO(conn);
             rows = carreraDAO.insertarCarrera(carrera);
