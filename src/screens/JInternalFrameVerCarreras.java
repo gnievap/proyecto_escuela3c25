@@ -45,6 +45,7 @@ public class JInternalFrameVerCarreras extends JInternalFrame {
         tableCarreras = new JTable(tableModel); // Placeholder para el JTable
         scrollPane = new JScrollPane(tableCarreras);
 
+
         rellenarTabla();
         tableCarreras.setModel(tableModel);
         tableModel.fireTableDataChanged();

@@ -19,6 +19,22 @@ public class CarreraDAO {
         this.conn = conn;
     }
 
+    public int obtenerUltimoId() {
+        String sql = "SELECT MAX(idcarrera) AS max_id FROM carreras";
+        int ultimoId = 0;
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                ultimoId = rs.getInt("max_id");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el último ID: " + e.getMessage());
+        }
+
+        return ultimoId;
+    }
+
     public int insertarCarrera(Carrera carrera) {
 
         String sql = "INSERT INTO carreras (idcarrera, nombre, monto) VALUES (?, ?, ?)";

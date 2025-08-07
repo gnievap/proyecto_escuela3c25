@@ -37,11 +37,18 @@ public class JInternalFrameInsertarCarrera extends JInternalFrame{
     }
 
     private void initComponents(){
+        CarreraDAO carreraDAO = new CarreraDAO(conn);
+        // Obtener el último ID y sumarle 1 para el nuevo registro
+        int lastId = carreraDAO.obtenerUltimoId() + 1; 
         // Creación de objetos
         lblId = new JLabel("Id:");
         lblNombreCarrera = new JLabel("Nombre de carrera:");
         lblMonto = new JLabel("Monto pagado:");
-        txtId = new JTextField();
+        // Enviando el último ID al campo de texto
+        txtId = new JTextField(Integer.toString(lastId));
+        txtId.setEditable(false); // El ID no se puede editar
+        txtId.setEnabled(false); // Deshabilitar el campo de texto
+       
         txtNombreCarrera = new JTextField();
         txtMonto = new JTextField();
         btnAceptar = new JButton("Aceptar");
@@ -121,6 +128,8 @@ public class JInternalFrameInsertarCarrera extends JInternalFrame{
             txtMonto.setText("");
         }
     }
+
+
     
 }
 
