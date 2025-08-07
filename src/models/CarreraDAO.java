@@ -2,7 +2,10 @@ package models;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /*CarreraDAO -> Contiene todos los métodos para interactuar 
 con la tabla Carreras de la base de datos.
@@ -33,6 +36,35 @@ public class CarreraDAO {
         return rows; 
         
     }
+
+    public ArrayList<Carrera> obtenerCarreras(){
+        ArrayList<Carrera> listaCarreras = new ArrayList<>();
+        String sql = "SELECT * FROM carreras ORDER BY idcarrera";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            /* El ResultSet es el resultado del select,
+               una matriz con el contenido de la tabla carreras */
+            while (rs.next()) { // mientras haya renglones en el resultSet
+                // Se recuperan los datos de cada renglón del rs
+                int idcarrera = rs.getInt("idcarrera");
+                String nombre = rs.getString("nombre");
+                double monto = rs.getDouble("monto");
+
+                // Se crea un POJO con los datos de cada renglon del rs
+                Carrera unaCarrera = new Carrera(idcarrera, nombre, monto);
+                // Se agrega el nuevo objeto Carrera al arreglo
+                listaCarreras.add(unaCarrera);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        // Se regresa un arreglo con objetos Carrera
+        return listaCarreras;
+    }
+
+
 
 
     
