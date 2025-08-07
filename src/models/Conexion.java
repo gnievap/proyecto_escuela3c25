@@ -11,8 +11,8 @@ import java.sql.SQLException;
 
 public class Conexion {
     private static final String URL = "jdbc:postgresql://localhost:5433/escuela";
-    private static final String USER="postgres";
-    private static final String PASSWORD = "gnieva";
+    private static final String USER="";
+    private static final String PASSWORD = "";
 
     public static Connection conectar() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
