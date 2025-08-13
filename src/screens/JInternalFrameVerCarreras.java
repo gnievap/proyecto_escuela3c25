@@ -40,7 +40,7 @@ public class JInternalFrameVerCarreras extends JInternalFrame {
 
         // Aquí se debería cargar la lista de carreras desde la base de datos
         // y crear el JTable con los datos obtenidos.
-        String[] columnNames = {"ID Carrera", "Nombre", "Monto"};
+        String[] columnNames = {"ID Carrera", "Nombre", "Monto", " ", " "};
         tableModel = new DefaultTableModel(columnNames, 0);
         tableCarreras = new JTable(tableModel); // Placeholder para el JTable
         scrollPane = new JScrollPane(tableCarreras);
@@ -80,7 +80,9 @@ public class JInternalFrameVerCarreras extends JInternalFrame {
             Object[] rowData = {
                 carrera.getIdcarrera(),
                 carrera.getNombre(),
-                carrera.getMonto()
+                carrera.getMonto(),
+                "Actualizar", // Placeholder para acciones
+                "Eliminar"
             };
             tableModel.addRow(rowData);
     }

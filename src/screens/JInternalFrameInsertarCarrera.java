@@ -117,7 +117,7 @@ public class JInternalFrameInsertarCarrera extends JInternalFrame{
         }
         else {
             // Revisar que la carrera no exista
-            if (carreraDAO.existeCarrera(nombre)) {
+            if (carreraDAO.existeCarrera(nombre) == true) {
                 JOptionPane.showMessageDialog(this, "La carrera ya existe.");
                 return;
             }

@@ -97,6 +97,29 @@ public class CarreraDAO {
         return listaCarreras;
     }
 
+     public ArrayList<String> obtenerNombresCarreras(){
+        ArrayList<String> nombresCarreras = new ArrayList<>();
+        String sql = "SELECT nombre FROM carreras ORDER BY idcarrera";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            /* El ResultSet es el resultado del select,
+               una matriz con el contenido de la tabla carreras */
+            while (rs.next()) { // mientras haya renglones en el resultSet
+                // Se recuperan los datos de cada renglón del rs
+                String nombre = rs.getString("nombre");
+                // Se agrega el nuevo objeto Carrera al arreglo
+                nombresCarreras.add(nombre);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        // Se regresa un arreglo con objetos Carrera
+        return nombresCarreras;
+    }
+
+
 
 
 
