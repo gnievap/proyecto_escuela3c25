@@ -119,9 +119,5 @@ public class CarreraDAO {
         return nombresCarreras;
     }
 
-
-
-
-
     
 }
