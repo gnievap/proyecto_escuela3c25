@@ -2,9 +2,11 @@ package screens;
 
 import java.awt.Font;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -12,6 +14,7 @@ import javax.swing.JTextField;
 
 import models.Alumno;
 import models.AlumnoDAO;
+import models.CarreraDAO;
 
 
 public class JInternalFrameInsertarAlumno  extends JInternalFrame {
@@ -27,6 +30,7 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
     private JLabel lblDomicilio;
     private JLabel lblMunicipio;
     private JLabel lblBachillerato;
+    private JLabel lblCarrera; // Añadir etiqueta para Carrera
     private JTextField txtId;
     private JTextField txtNombre;
     private JTextField txtApat;
@@ -34,9 +38,11 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
     private JTextField txtDomicilio;
     private JTextField txtMunicipio;
     private JTextField txtBachillerato;
+    private JComboBox<String> jcbCarrera; // Añadir campo de texto para Carrera
     private JButton btnAceptar;
     private JButton btnCancelar;
     private AlumnoDAO alumnoDAO;
+    private CarreraDAO carreraDAO;
 
 
     public JInternalFrameInsertarAlumno(Connection conn) {
@@ -47,6 +53,7 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
               true); // iconifiable (minimizable)
         this.conn = conn; // Inicializar la conexión a la base de datos 
         this.alumnoDAO = new AlumnoDAO(conn);  
+        this.carreraDAO = new CarreraDAO(conn);
         this.setTitle("Insertar nuevo alumno");
         this.setSize(400, 400);
         initComponents();
@@ -55,6 +62,8 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
     private void initComponents() {
          // Obtener el último ID y sumarle 1 para el nuevo registro
         int lastId = alumnoDAO.obtenerUltimoId() + 1; 
+        //Obtener los nombres de las carreras para el JComboBox
+        ArrayList<String> nombresCarreras = carreraDAO.obtenerNombresCarreras();
         // Creación de objetos
         lblId = new JLabel("Id:");
         lblNombre = new JLabel("Nombre:");
@@ -63,6 +72,7 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
         lblDomicilio = new JLabel("Domicilio:");
         lblMunicipio = new JLabel("Municipio:");
         lblBachillerato = new JLabel("Bachillerato:");  
+        lblCarrera = new JLabel("Carrera:"); // Añadir etiqueta para Carrera
 
         txtId = new JTextField(Integer.toString(lastId));
         txtId.setEditable(false); // El ID no se puede editar
@@ -75,7 +85,12 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
         txtDomicilio = new JTextField();
         txtMunicipio = new JTextField();
         txtBachillerato = new JTextField();
-       
+        jcbCarrera = new JComboBox<>(); // Inicializar el JComboBox para Carrera
+        for (String nombre : nombresCarreras) {
+            jcbCarrera.addItem(nombre);
+        }
+
+
         btnAceptar = new JButton("Aceptar");
         btnCancelar = new JButton("Cancelar");
 
@@ -87,6 +102,8 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
         lblDomicilio.setFont(new Font("Tahoma", Font.BOLD, 16));
         lblMunicipio.setFont(new Font("Tahoma", Font.BOLD, 16));
         lblBachillerato.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblCarrera.setFont(new Font("Tahoma", Font.BOLD, 16));
+
         //Botones 
         btnAceptar.setFont(new Font("Tahoma", Font.BOLD, 16));
         btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -116,6 +133,8 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
                 .addComponent(txtMunicipio)
                 .addComponent(lblBachillerato)
                 .addComponent(txtBachillerato)
+                .addComponent(lblCarrera)
+                .addComponent(jcbCarrera) // Añadir el JComboBox para Carrera
                 .addGroup(
                     layout.createSequentialGroup()
                         .addComponent(btnAceptar)
@@ -139,6 +158,9 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
                 .addComponent(txtMunicipio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addComponent(lblBachillerato)
                 .addComponent(txtBachillerato, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblCarrera)
+                .addComponent(jcbCarrera, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE) // Añadir el JComboBox para Carrera
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(
                     layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAceptar)
