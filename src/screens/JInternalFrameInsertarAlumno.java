@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,6 +14,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import models.Alumno;
@@ -82,7 +84,7 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
     ArrayList<String> nombresCarreras = carreraDAO.obtenerNombresCarreras();
     ArrayList<String> nombresBachilleratos = bachilleratoDAO.obtenerNombresBachilleratos();
 
-    // === Creación de componentes ===
+    // === Creación de etiquetas ===
     lblId = new JLabel("Id:");
     lblNombre = new JLabel("Nombre:");
     lblApat = new JLabel("Apellido Paterno:");
@@ -97,6 +99,7 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
     lblPromGral = new JLabel("Promedio General:");
     lblCarrera = new JLabel("Carrera:");
 
+    // === Campos de texto ===
     txtId = new JTextField(Integer.toString(lastId));
     txtId.setEditable(false);
     txtId.setEnabled(false);
@@ -106,35 +109,46 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
     txtAmat = new JTextField();
     txtDomicilio = new JTextField();
     txtPromBach = new JTextField();
-    txtGenero = new JTextField();
     txtPagado = new JTextField();
     txtPromGral = new JTextField();
-    jcbCuatrimestre = new JComboBox<>(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"});
 
+    jcbCuatrimestre = new JComboBox<>(new String[]{"1","2","3","4","5","6","7","8","9","10","11"});
     jcbMunicipio = new JComboBox<>(municipios);
 
+    // === Bachilleratos ===
     jcbBachillerato = new JComboBox<>();
     for (String bachillerato : nombresBachilleratos) {
         jcbBachillerato.addItem(bachillerato);
     }
 
+    // === Carreras ===
     jcbCarrera = new JComboBox<>();
     for (String nombre : nombresCarreras) {
         jcbCarrera.addItem(nombre);
     }
 
+    // === Botones ===
     btnAceptar = new JButton("Aceptar");
     btnCancelar = new JButton("Cancelar");
     btnAceptar.addActionListener(e -> insertarAlumno());
     btnCancelar.addActionListener(e -> this.dispose());
 
-    // === Fuente en labels y botones ===
+    // === Radio buttons para género ===
+    JRadioButton rbMasculino = new JRadioButton("Masculino");
+    JRadioButton rbFemenino = new JRadioButton("Femenino");
+    ButtonGroup grupoGenero = new ButtonGroup();
+    grupoGenero.add(rbMasculino);
+    grupoGenero.add(rbFemenino);
+
+    // === Fuente para etiquetas y botones ===
     Font font = new Font("Tahoma", Font.BOLD, 16);
     for (JLabel lbl : new JLabel[]{lblId, lblNombre, lblApat, lblAmat, lblDomicilio, lblMunicipio,
                                    lblBachillerato, lblCarrera, lblPromBach, lblGenero,
                                    lblCuatrimestre, lblPagado, lblPromGral}) {
         lbl.setFont(font);
     }
+    rbMasculino.setFont(font);
+    rbFemenino.setFont(font);
     btnAceptar.setFont(font);
     btnCancelar.setFont(font);
 
@@ -175,6 +189,11 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
         glDer.createParallelGroup()
             .addComponent(lblBachillerato).addComponent(jcbBachillerato)
             .addComponent(lblPromBach).addComponent(txtPromBach)
+            .addComponent(lblGenero)
+            .addGroup(glDer.createSequentialGroup()
+                .addComponent(rbMasculino)
+                .addComponent(rbFemenino)
+            )
             .addComponent(lblCuatrimestre).addComponent(jcbCuatrimestre)
             .addComponent(lblCarrera).addComponent(jcbCarrera)
             .addComponent(lblPagado).addComponent(txtPagado)
@@ -184,6 +203,11 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
         glDer.createSequentialGroup()
             .addComponent(lblBachillerato).addComponent(jcbBachillerato)
             .addComponent(lblPromBach).addComponent(txtPromBach)
+            .addComponent(lblGenero)
+            .addGroup(glDer.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(rbMasculino)
+                .addComponent(rbFemenino)
+            )
             .addComponent(lblCuatrimestre).addComponent(jcbCuatrimestre)
             .addComponent(lblCarrera).addComponent(jcbCarrera)
             .addComponent(lblPagado).addComponent(txtPagado)
@@ -195,7 +219,7 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
     panelPrincipal.add(panelIzq);
     panelPrincipal.add(panelDer);
 
-    // === Panel botones ===
+    // === Panel de botones ===
     JPanel panelBotones = new JPanel();
     panelBotones.add(btnAceptar);
     panelBotones.add(btnCancelar);
@@ -207,6 +231,7 @@ public class JInternalFrameInsertarAlumno  extends JInternalFrame {
 
     pack();
 }
+
 
 
     // private void initComponents() {
