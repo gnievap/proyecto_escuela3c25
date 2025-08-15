@@ -1,6 +1,5 @@
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import models.Conexion;
 import screens.VentanaPrincipal;
@@ -9,13 +8,17 @@ public class App {
     public static void main(String[] args) throws Exception {
         Connection conn = null;
 
-        try {
-            conn = Conexion.conectar();{
+        
+            conn = Conexion.getConnection();
+            if (conn != null )
+            {
                 System.out.println("Conexión exitosa a la base de datos.");
             }
-        } catch (SQLException e) {
-            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
-        }
+            else
+            {
+                System.out.println("No se pudo establecer la conexión a la base de datos.");
+            }
+        
         
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
